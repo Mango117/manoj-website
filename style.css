@@ -1,0 +1,99 @@
+@font-face {
+    font-family: 'SF Mono';
+    src: url('fonts/SF-Pro-Display-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'SF Mono', monospace;
+    background-color: #fff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    padding: 0;
+    padding-top: 120px;
+    padding-bottom: 80px; /* Add bottom padding */
+    max-width: 700px;
+    width: 100%;
+}
+
+.profile-pic {
+    width: auto;
+    height: calc(14em); /* Adjust this value to match the combined height of h1 and h3 */
+    margin-right: 20px;
+    border-radius: 10%;
+}
+
+main ul li {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+.no-bullets {
+    list-style-type: none;  /* Removes the bullet points */
+    padding-left: 0;        /* Removes the default indentation */
+    margin: 0;              /* Optional: remove extra space around the list */
+}
+
+/* Optional: Add some custom styling */
+.no-bullets li {
+    padding: 8px 0;         /* Adds space between list items */
+}
+
+.two-columns {
+    display: flex;              /* Enables Flexbox */
+    gap: 20px;                  /* Adds space between the columns */
+    align-items: center;        /* Vertically aligns content */
+    padding: 20px;
+    padding-top: 80px;
+    padding-left: 40px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.column {
+    flex: 1;                    /* Makes both columns take equal space */
+}
+
+.text-column {
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Responsive Design: Stack columns on small screens */
+@media (max-width: 400px) {
+    .two-columns {
+        flex-direction: column; /* Stacks the columns vertically */
+        text-align: center;
+    }
+}
+
+.subscribe {
+    padding-top: 140px;
+    padding-left: 40px;
+}
