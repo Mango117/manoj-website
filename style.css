@@ -9,7 +9,7 @@ body {
     font-family: 'SF Mono', monospace;
     background-color: #fff;
     color: #333;
-    margin: 0;
+    margin: 20px;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -18,14 +18,14 @@ body {
 main {
     padding: 0;
     padding-top: 120px;
-    padding-bottom: 80px; /* Add bottom padding */
+    padding-bottom: 80px;
     max-width: 700px;
     width: 100%;
 }
 
 .profile-pic {
     width: auto;
-    height: calc(14em); /* Adjust this value to match the combined height of h1 and h3 */
+    height: calc(14em);
     margin-right: 20px;
     border-radius: 10%;
 }
@@ -49,8 +49,8 @@ main ul li {
 
 @media (max-width: 480px) {
     main {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
 
