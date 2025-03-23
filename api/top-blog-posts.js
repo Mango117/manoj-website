@@ -1,21 +1,7 @@
-const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
-const path = require("path");
 
-const app = express();
-const PORT = 3000;
-require("dotenv").config();
-
-// Serve static files from the current directory
-app.use(express.static(__dirname));
-
-// Serve the index.html file for the root route
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
-
-app.get("/api/top-blog-posts", async (req, res) => {
+module.exports = async (req, res) => {
     try {
         const archiveUrl = process.env.SUBSTACK_ARCHIVE_URL;
         if (!archiveUrl) {
@@ -29,8 +15,6 @@ app.get("/api/top-blog-posts", async (req, res) => {
         });
 
         const $ = cheerio.load(data);
-        console.log('SUBSTACK_ARCHIVE_URL:', archiveUrl);
-
         const elements = $(".pc-display-flex.pc-flexDirection-column.pc-gap-4");
         const posts = [];
 
@@ -64,8 +48,4 @@ app.get("/api/top-blog-posts", async (req, res) => {
         console.error("Error scraping blog posts:", error.message);
         res.status(500).json({ error: "Failed to fetch blog posts. Please try again later." });
     }
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+};
