@@ -17,9 +17,15 @@ app.get("/", (req, res) => {
 
 app.get("/api/top-blog-posts", async (req, res) => {
     try {
-        const { data } = await axios.get(process.env.SUBSTACK_ARCHIVE_URL);
+        const archiveUrl = process.env.SUBSTACK_ARCHIVE_URL;
+        if (!archiveUrl) {
+            console.error("SUBSTACK_ARCHIVE_URL is not set in the environment variables.");
+            return res.status(500).json({ error: "Server configuration error: SUBSTACK_ARCHIVE_URL is missing." });
+        }
+
+        const { data } = await axios.get(archiveUrl);
         const $ = cheerio.load(data);
-        console.log('SUBSTACK_ARCHIVE_URL:', process.env.SUBSTACK_ARCHIVE_URL);
+        console.log('SUBSTACK_ARCHIVE_URL:', archiveUrl);
 
         // Update selectors based on the current DOM structure of the Substack archive page
         const elements = $(".pc-display-flex.pc-flexDirection-column.pc-gap-4"); // Parent container of each post
@@ -33,8 +39,13 @@ app.get("/api/top-blog-posts", async (req, res) => {
                 const imageElement = $(element).find("img.postImage-L4FlO9");
 
                 const title = linkElement.text().trim();
-                const url = linkElement.attr("href");
+                let url = linkElement.attr("href");
                 const imageUrl = imageElement.attr("src");
+
+                // Convert relative URLs to absolute URLs
+                if (url && !url.startsWith("http")) {
+                    url = new URL(url, archiveUrl).href;
+                }
 
                 if (title && imageUrl && url) {
                     console.log("Scraped post:", { title, url, imageUrl });
@@ -48,7 +59,7 @@ app.get("/api/top-blog-posts", async (req, res) => {
         }
 
         if (posts.length === 0) {
-            console.error(`No posts found. Check the selectors or the structure of the URL '${process.env.SUBSTACK_ARCHIVE_URL}'.`);
+            console.error(`No posts found. Check the selectors or the structure of the URL '${archiveUrl}'.`);
         }
 
         res.json(posts);
