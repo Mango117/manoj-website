@@ -23,12 +23,15 @@ app.get("/api/top-blog-posts", async (req, res) => {
             return res.status(500).json({ error: "Server configuration error: SUBSTACK_ARCHIVE_URL is missing." });
         }
 
-        const { data } = await axios.get(archiveUrl);
+        const { data } = await axios.get(archiveUrl).catch((err) => {
+            console.error("Error fetching Substack archive URL:", err.message);
+            throw new Error("Failed to fetch Substack archive page.");
+        });
+
         const $ = cheerio.load(data);
         console.log('SUBSTACK_ARCHIVE_URL:', archiveUrl);
 
-        // Update selectors based on the current DOM structure of the Substack archive page
-        const elements = $(".pc-display-flex.pc-flexDirection-column.pc-gap-4"); // Parent container of each post
+        const elements = $(".pc-display-flex.pc-flexDirection-column.pc-gap-4");
         const posts = [];
 
         if (elements.length === 0) {
@@ -42,20 +45,14 @@ app.get("/api/top-blog-posts", async (req, res) => {
                 let url = linkElement.attr("href");
                 const imageUrl = imageElement.attr("src");
 
-                // Convert relative URLs to absolute URLs
                 if (url && !url.startsWith("http")) {
                     url = new URL(url, archiveUrl).href;
                 }
 
                 if (title && imageUrl && url) {
-                    console.log("Scraped post:", { title, url, imageUrl });
                     posts.push({ title, imageUrl, url });
                 }
             });
-
-            if (process.env.NODE_ENV !== "production") {
-                console.log("Scraped posts:", posts); // Debug log to verify scraped data
-            }
         }
 
         if (posts.length === 0) {
@@ -64,8 +61,8 @@ app.get("/api/top-blog-posts", async (req, res) => {
 
         res.json(posts);
     } catch (error) {
-        console.error("Error scraping blog posts:", error);
-        res.status(500).json({ error: "Failed to fetch blog posts" });
+        console.error("Error scraping blog posts:", error.message);
+        res.status(500).json({ error: "Failed to fetch blog posts. Please try again later." });
     }
 });
 
