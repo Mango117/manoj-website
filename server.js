@@ -19,6 +19,7 @@ app.get("/api/top-blog-posts", async (req, res) => {
     try {
         const { data } = await axios.get(process.env.SUBSTACK_ARCHIVE_URL);
         const $ = cheerio.load(data);
+        console.log('SUBSTACK_ARCHIVE_URL:', process.env.SUBSTACK_ARCHIVE_URL);
 
         // Update selectors based on the current DOM structure of the Substack archive page
         const elements = $(".pc-display-flex.pc-flexDirection-column.pc-gap-4"); // Parent container of each post
