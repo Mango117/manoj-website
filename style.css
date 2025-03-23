@@ -6,13 +6,17 @@
 }
 
 body {
-    font-family: 'SF Mono', monospace;
+    font-family: 'SF Mono', monospace; /* Ensure consistent font usage */
     background-color: #fff;
     color: #333;
     margin: 20px;
     padding: 0;
     display: flex;
     justify-content: center;
+}
+
+* {
+    font-family: inherit; /* Inherit font from body for all elements */
 }
 
 main {
@@ -65,13 +69,24 @@ main ul li {
     padding: 8px 0;         /* Adds space between list items */
 }
 
+ul.life-story {
+    padding-inline-start: 20px; /* Decrease padding at the start of the list */
+}
+
+
+.music {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+}
+
 .two-columns {
     display: flex;              /* Enables Flexbox */
     gap: 20px;                  /* Adds space between the columns */
     align-items: center;        /* Vertically aligns content */
-    padding: 20px;
-    padding-top: 80px;
-    padding-left: 40px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
     max-width: 800px;
     margin: auto;
 }
@@ -81,7 +96,6 @@ main ul li {
 }
 
 .text-column {
-    padding: 10px;
     font-size: 16px;
 }
 
@@ -89,11 +103,82 @@ main ul li {
 @media (max-width: 400px) {
     .two-columns {
         flex-direction: column; /* Stacks the columns vertically */
-        text-align: center;
+        text-align: left; /* Align content to the left */
+        align-items: flex-start; /* Ensure columns are left-aligned */
+    }
+
+    .two-columns .text-column {
+        text-align: left; /* Ensure text within each column is left-aligned */
+        width: 100%; /* Ensure columns take full width */
     }
 }
 
 .subscribe {
-    padding-top: 140px;
-    padding-left: 40px;
+    padding-bottom: 60px;
+    padding-left: 20px;
+}
+
+.top-posts {
+    padding-left: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.blog-posts-container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.blog-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none; /* Ensures no underline on links */
+    color: inherit; /* Inherit text color */
+    border-radius: 10px; /* Add curved edges */
+    transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+}
+
+.blog-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+}
+
+.blog-card-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px; /* Add curved edges */
+}
+
+.blog-card-title {
+    margin-top: 10px;
+    font-size: 16px; /* Match the normal paragraph font size */
+}
+
+@media (max-width: 768px) {
+    .blog-posts-container {
+        flex-direction: column; /* Stack blog cards vertically */
+        gap: 20px; /* Add spacing between cards */
+    }
+
+    .blog-card {
+        width: 100%; /* Take full width of the container */
+        display: flex; /* Enable flex layout */
+        flex-direction: row; /* Arrange content in a row */
+        align-items: center; /* Vertically align content */
+        gap: 10px; /* Add spacing between image and title */
+    }
+
+    .blog-card-img {
+        width: 30%; /* Set image width to 30% */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .blog-card-title {
+        flex: 1; /* Allow title to take remaining space */
+        margin: 0; /* Remove any default margins */
+        font-size: 16px; /* Ensure consistent font size */
+    }
 }

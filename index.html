@@ -29,24 +29,24 @@
             <img src="images/image1.jpg" alt="Profile Picture" class="profile-pic">
               <div>
                 <h1>Manoj</h1>
-                <h3>@ Melbourne, Australia (For now)</h3>
+                <h3>@ San Francisco, California</h3>
             </div>
         </div>
         <section>
             <p>Hi, I'm Manoj</p>
             <p>Here's my life story:
             </p>
-            <ul>
+            <ul class="life-story">
                 <li> I was born in the south eastern suburbs of Melbourne, Australia to immigrant parents from Sri Lanka</li>  
-                <li> I was super nerdy as a kid and loved creating stuff. I entered a global <a href="https://youtu.be/_81EbakD4x0">Lego stopmotion competition</a> and placed within the top 10 entrants in the world. I think it might have been a pity prize as I was 12 years old at the time.</li>  
+                <li> I was super nerdy as a kid and loved creating stuff. I entered a global <a href="https://youtu.be/_81EbakD4x0">Lego stopmotion competition</a> and placed within the top 10 entrants in the world. It might have been a pity prize as I was 12 years old at the time.</li>  
                 <li> I graduated high school in the <a href="https://www.heraldsun.com.au/leader/south-east/haileybury-keysborough-students-top-of-victorias-class-of-2016/news-story/5be8db5474038ff9ae19049befb2dc2a">top 0.05% of Australia</a> then went straight to medical school at 18.</li>
                 <li> Halfway through my MD, I founded <a href="https://kisacademics.com/">KIS Academics</a>. We were accepted into the <a href="https://www.monash.edu/entrepreneurship/news/articles/meet-the-2019-accelerator-cohort">Monash Accelerator program.</a> </li>
                 <li> During COVID, I did research for an honours year (BMedSc Hons). I published <a href="https://www.researchgate.net/scientific-contributions/Manoj-Liyana-Arachige-2228951586">two papers</a> and <a href="https://monashhealth.org/latest-news/2023/12/19/medical-intern-creates-ai-program-to-analyse-thousands-of-research-papers/">taught myself python and R.</a> I loved both coding and research.</li>
-                <li> After graduating, I worked as a junior doctor at <a href="https://monashhealth.org/about/">Monash Health</a>. I was running KIS Academics simultaneously. </li>
+                <li> After graduating, I worked as a junior doctor at <a href="https://monashhealth.org/about/">Monash Health</a>. I was running KIS Academics simultaneously and grew it to 7 figures in revenue.</li>
                 <li> After a year of 90 hour workweeks balancing these two roles, I decided to take a break. I quit being a doctor and hired a new CEO for KIS Academics.</li>
                 <li> I lived out of a backpack in 2024 and <a href="https://manojarachige.substack.com/p/why-i-travelled-the-world-for-366?r=f82b7">travelled around the world</a> for 366 days. I had never really travelled before, and this was my first time solo travelling too.</li>
-                <li> I made amazing friends, did some cool and crazy things and documented my adventures on <a href="https://www.instagram.com/manoj_arachige/">Instagram</a></li>
-                <li> 31 countries later, I returned to Australia in Jan 2025. It's time to figure out what's next.</li>
+                <li> I made amazing friends, did some <a href="https://manojarachige.substack.com/p/7-cool-and-crazy-things-i-did-in?r=f82b7">cool and crazy</a> things and documented my adventures on <a href="https://www.instagram.com/manoj_arachige/">Instagram</a></li>
+                <li> 31 countries later, I returned to Australia in Jan 2025 to figure out what to do next.</li>
             </ul>
         </section>
 
@@ -65,13 +65,25 @@
                 <ul class="no-bullets">
                     <li><a href = "https://kisacademics.com/">KIS Academics</a></li>
                     <li><a href = "https://manojarachige.substack.com/?r=f82b7&utm_campaign=pub-share-checklist">Substack</a></li>
-                    <li>Coming Soon</li>
+                    <li><a href="https://superpower.com/">Superpower</a></li>
                 </ul>
             </div>
         </section>
 
-        <section class="subscribe">
+        <section class="music">
+            <div class="spotify-embed">
+                <h3>What I'm listening to:</h3>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5w6xfz5nx3cWNJE80qLSfr?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <!-- This section dynamically displays the top blog posts. Content will be inserted via JavaScript. -->
+        <section class="top-posts">
             <h3>My Writing:</h3>
+            <div id="blog-posts" class="blog-posts-container"></div>
+        </section>
+
+        <section class="subscribe">
             <iframe src="https://manojarachige.substack.com/embed" width="400" height="150" style="background:white; margin-left: -30px;" frameborder="0" scrolling="no"></iframe>
         </section>
     </main>
@@ -80,5 +92,32 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Fetch and display top blog posts
+        async function fetchTopBlogPosts() {
+            try {
+                const response = await fetch('/api/top-blog-posts');
+                const posts = await response.json();
+                const blogPostsContainer = document.getElementById('blog-posts');
+                blogPostsContainer.innerHTML = ''; // Clear fallback message
+
+                posts.forEach(post => {
+                    const card = document.createElement('a');
+                    card.className = 'blog-card';
+                    card.href = post.url;
+                    card.target = "_blank"; // opens in new tab; remove if you want same-tab
+                    card.innerHTML = `
+                        <img src="${post.imageUrl}" alt="${post.title}" class="blog-card-img">
+                        <h4 class="blog-card-title">${post.title}</h4>
+                    `;
+                    blogPostsContainer.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error fetching blog posts:', error);
+            }
+        }
+
+        fetchTopBlogPosts();
+    </script>
 </body>
 </html>
