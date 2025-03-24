@@ -77,7 +77,6 @@ ul.life-story {
 .music {
     padding-top: 40px;
     padding-bottom: 40px;
-    padding-left: 20px;
 }
 
 .two-columns {
@@ -86,7 +85,6 @@ ul.life-story {
     align-items: center;        /* Vertically aligns content */
     padding-top: 40px;
     padding-bottom: 40px;
-    padding-left: 20px;
     max-width: 800px;
     margin: auto;
 }
@@ -115,11 +113,9 @@ ul.life-story {
 
 .subscribe {
     padding-bottom: 60px;
-    padding-left: 20px;
 }
 
 .top-posts {
-    padding-left: 20px;
     padding-top: 40px;
     padding-bottom: 40px;
 }
