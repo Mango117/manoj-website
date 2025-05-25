@@ -75,16 +75,16 @@ ul.life-story {
 
 
 .music {
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 80px;
+    padding-bottom: 80px;
 }
 
 .two-columns {
     display: flex;              /* Enables Flexbox */
     gap: 20px;                  /* Adds space between the columns */
     align-items: center;        /* Vertically aligns content */
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 100px;
+    padding-bottom: 100px;
     max-width: 800px;
     margin: auto;
 }
@@ -116,7 +116,7 @@ ul.life-story {
 }
 
 .top-posts {
-    padding-top: 40px;
+    padding-top: 80px;
     padding-bottom: 40px;
     padding-right: 20px;
 }
