@@ -2,9 +2,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const blogPostsContainer = document.getElementById("blog-posts");
 
     try {
-        const response = await fetch("/api/top-blog-posts", { cache: "no-store" });
+        const url = new URL(window.location.origin + "/api/top-blog-posts");
+        if (new URLSearchParams(window.location.search).get('debug') === '1') {
+            url.searchParams.set('debug', '1');
+        }
+        const response = await fetch(url.toString(), { cache: "no-store" });
         if (!response.ok) {
             throw new Error("Non-200 response: " + response.status);
+        }
+        const debugHeader = response.headers.get('x-debug-logs');
+        if (debugHeader) {
+            try {
+                console.debug("[server]", decodeURIComponent(debugHeader).split('\n'));
+            } catch (_) {
+                // ignore
+            }
         }
         const posts = await response.json();
 
