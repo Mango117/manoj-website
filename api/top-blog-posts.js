@@ -3,13 +3,14 @@ const cheerio = require("cheerio");
 
 module.exports = async (req, res) => {
     try {
-        const archiveUrl = process.env.SUBSTACK_ARCHIVE_URL;
-        if (!archiveUrl) {
-            console.error("SUBSTACK_ARCHIVE_URL is not set in the environment variables.");
-            return res.status(500).json({ error: "Server configuration error: SUBSTACK_ARCHIVE_URL is missing." });
-        }
+        const archiveUrl = process.env.SUBSTACK_ARCHIVE_URL || "https://manojarachige.substack.com/archive";
 
-        const { data } = await axios.get(archiveUrl).catch((err) => {
+        const { data } = await axios.get(archiveUrl, {
+            headers: {
+                // Pretend to be a browser to avoid potential bot blocks
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+            }
+        }).catch((err) => {
             console.error("Error fetching Substack archive URL:", err.message);
             throw new Error("Failed to fetch Substack archive page.");
         });
